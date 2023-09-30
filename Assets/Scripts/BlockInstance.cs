@@ -6,4 +6,10 @@ public class BlockInstance : MonoBehaviour
 {
     public SO_Block blockInfo;
     public float preferenceScore;
+
+    public void UpdateAppearance()
+    {
+        transform.GetComponent<SpriteRenderer>().color = blockInfo.color;
+        gameObject.name = $"Block ({blockInfo.blockName})";
+    }
 }

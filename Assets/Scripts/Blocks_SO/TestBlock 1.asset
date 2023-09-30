@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3ee0ed2027ef7d48a69efaddb54c063, type: 3}
-  m_Name: TestBlock
+  m_Name: TestBlock 1
   m_EditorClassIdentifier: 
-  blockName: Fred
-  color: {r: 1, g: 0.25, b: 0.25, a: 1}
+  blockName: Barry
+  color: {r: 0.25098038, g: 0.9306255, b: 1, a: 1}
   face: {fileID: 0}
   preferences:
-  - prefBlock: {fileID: 11400000, guid: 95fdedd4e6652e446857a0b2f1104657, type: 2}
-    prefValue: 0
+  - prefBlock: {fileID: 11400000, guid: d0e2032144651c143a18236d5e4a3758, type: 2}
+    prefValue: 1

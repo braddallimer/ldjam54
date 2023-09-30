@@ -6,5 +6,7 @@ using UnityEngine;
 public class SO_Block: ScriptableObject
 {
     public string blockName = "Enter name...";
+    public Color color = Color.white;
+    public Sprite face = null;
     [SerializeField] public PreferenceValue[] preferences;
 }

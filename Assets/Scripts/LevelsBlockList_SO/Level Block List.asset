@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3ee0ed2027ef7d48a69efaddb54c063, type: 3}
-  m_Name: TestBlock
+  m_Script: {fileID: 11500000, guid: 175082a14bce5d540b0eb8e534e3be31, type: 3}
+  m_Name: Level Block List
   m_EditorClassIdentifier: 
-  blockName: Fred
-  color: {r: 1, g: 0.25, b: 0.25, a: 1}
-  face: {fileID: 0}
-  preferences:
-  - prefBlock: {fileID: 11400000, guid: 95fdedd4e6652e446857a0b2f1104657, type: 2}
-    prefValue: 0
+  blockList:
+  - {fileID: 11400000, guid: d0e2032144651c143a18236d5e4a3758, type: 2}
+  - {fileID: 11400000, guid: 2c2daf3ce8a636147b623b822a101d33, type: 2}
