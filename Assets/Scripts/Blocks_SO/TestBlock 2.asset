@@ -15,8 +15,6 @@ MonoBehaviour:
   blockName: Jemima
   color: {r: 1, g: 0.25098038, b: 0.69892097, a: 1}
   face: {fileID: 0}
-  preferences:
-  - prefBlock: {fileID: 11400000, guid: 2c2daf3ce8a636147b623b822a101d33, type: 2}
-    prefValue: 0.5
-  - prefBlock: {fileID: 11400000, guid: d0e2032144651c143a18236d5e4a3758, type: 2}
-    prefValue: 0
+  relationships:
+  - targetBlock: {fileID: 11400000, guid: 2c2daf3ce8a636147b623b822a101d33, type: 2}
+    value: 0

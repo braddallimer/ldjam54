@@ -513,7 +513,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 338410430}
   m_HandleRect: {fileID: 338410429}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -767,7 +767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10, y: 0.00002820851}
+  m_AnchoredPosition: {x: 10, y: 0.00013391807}
   m_SizeDelta: {x: -10, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1315262749
@@ -1180,12 +1180,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1622583450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 818bfa0945f4dca4aad4642cb8e48dd1, type: 3}
+  m_Script: {fileID: 11500000, guid: c170c4a2c25ab1b419fe03a8d21a22ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rayTag: Holder
   selectedBlock: {fileID: 0}
   lastBlockHolder: {fileID: 0}
+  blockMang: {fileID: 1622583455}
 --- !u!114 &1622583455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1195,14 +1196,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1622583450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9badf86b063996844925c831c9aa7b91, type: 3}
+  m_Script: {fileID: 11500000, guid: ef0672ba02808134798c2baad4cf39d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blockListSO: {fileID: 11400000, guid: ef668c4b3d0b86c429e91d2b187d289d, type: 2}
   blockPrefab: {fileID: 5079326358533327175, guid: 7a6bdd20273e14c4f9396b52ca370e16, type: 3}
   buttonPrefab: {fileID: 4048757440091297680, guid: bd415e8e5e2944a43a2eba74a378dd70, type: 3}
   content: {fileID: 1315262748}
-  mouseControls: {fileID: 1622583454}
+  playerCont: {fileID: 1622583454}
 --- !u!4 &1684684693 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4561448823000542855, guid: 387553a8eff045643923e8426046980f, type: 3}

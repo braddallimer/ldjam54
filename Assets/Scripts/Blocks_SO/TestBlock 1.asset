@@ -15,6 +15,8 @@ MonoBehaviour:
   blockName: Barry
   color: {r: 0.25098038, g: 0.9306255, b: 1, a: 1}
   face: {fileID: 0}
-  preferences:
-  - prefBlock: {fileID: 11400000, guid: d0e2032144651c143a18236d5e4a3758, type: 2}
-    prefValue: 1
+  relationships:
+  - targetBlock: {fileID: 11400000, guid: 95fdedd4e6652e446857a0b2f1104657, type: 2}
+    value: 0
+  - targetBlock: {fileID: 11400000, guid: d0e2032144651c143a18236d5e4a3758, type: 2}
+    value: 1

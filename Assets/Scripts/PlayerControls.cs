@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
-public class DragAndDrop : MonoBehaviour
+public class PlayerControls : MonoBehaviour
 {
     [SerializeField] string rayTag;
     [SerializeField] BlockInstance selectedBlock;
     [SerializeField] BlockHolder lastBlockHolder;
+    [SerializeField] BlockManager blockMang;
 
     private void Update()
     {
@@ -107,14 +108,14 @@ public class DragAndDrop : MonoBehaviour
             {
                 Debug.Log("..they tried placing it over the void. Returning to pool.");
 
+                
                 if(lastBlockHolder != null)
-                {
-                    selectedBlock.transform.position = lastBlockHolder.transform.position;
-                    selectedBlock = null;
-                    lastBlockHolder = null;
-                }
+                    lastBlockHolder.RemoveBlockFromHolder();
 
                 // return block to pool
+                blockMang.ReturnBlockToPool(selectedBlock);
+                selectedBlock = null;
+                lastBlockHolder = null;
             }
         }
     }

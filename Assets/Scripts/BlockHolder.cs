@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class BlockHolder : MonoBehaviour
 {
-    [SerializeField] string blockTag = "Block";
     public BlockInstance heldBlock;
-    [SerializeField] float preferenceScore;
+    [SerializeField] BlockManager blockMang;
+
+    private void Start()
+    {
+        blockMang = FindObjectOfType<BlockManager>();
+    }
 
     public void AddBlockToHolder(BlockInstance newBlock)
     {
@@ -22,7 +26,7 @@ public class BlockHolder : MonoBehaviour
         newBlock.transform.parent = transform;
         heldBlock = newBlock;
 
-        CalculatePreferenceScore();
+        blockMang.UpdateBlockDiscomfortScores();
     }
 
     public void RemoveBlockFromHolder()
@@ -41,7 +45,8 @@ public class BlockHolder : MonoBehaviour
 
         // Add block to Pool
         // ph: BlockPool.instance.AddBlock(blockToRemove);
-        preferenceScore = 0;
+
+        blockMang.UpdateBlockDiscomfortScores();
     }
 
     public void SwapBlockFromOtherHolder(BlockHolder otherHolder)
@@ -76,52 +81,5 @@ public class BlockHolder : MonoBehaviour
         AddBlockToHolder(newBlock);
     }
 
-    void CalculatePreferenceScore()
-    {
-        float scoreAverage = 0;
-        int numInCloseProx = 0;
-
-        SO_Block heldBlockInfo = heldBlock.blockInfo;
-
-        foreach(GameObject gmob in GameObject.FindGameObjectsWithTag(blockTag))
-        {
-            if (gmob != null && gmob != heldBlock.gameObject)
-            {
-                float distance = Vector2.Distance(transform.position, gmob.transform.position);
-
-                if (distance < 4)
-                    numInCloseProx++;
-
-                foreach (PreferenceValue pref in heldBlockInfo.preferences)
-                {
-                    if (pref.prefBlock == gmob.GetComponent<BlockInstance>().blockInfo)
-                    {
-                        scoreAverage += pref.prefValue * DistanceMultiplier(distance);
-                    }
-
-                    else
-                        scoreAverage += .5f * DistanceMultiplier(distance);
-                }
-            }
-        }
-
-        scoreAverage /= numInCloseProx;
-        preferenceScore = scoreAverage;
-        Debug.Log($"{heldBlock.name}'s preference score is {preferenceScore}");
-    }
-
-    float DistanceMultiplier(float distance)
-    {
-        if (distance > 4)
-            return 0;
-
-        else if (distance > 3)
-            return .25f;
-
-        else if (distance > 2)
-            return .5f;
-
-        else
-            return 1;
-    }
+    
 }
