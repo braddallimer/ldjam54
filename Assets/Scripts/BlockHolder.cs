@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class BlockHolder : MonoBehaviour
 {
-    public Block heldBlock;
+    public BlockInstance heldBlock;
 
-    public void AddBlockToHolder(Block newBlock)
+    public void AddBlockToHolder(BlockInstance newBlock)
     {
         // If somehow this holder's block is still present, this should prevent errors
         if (heldBlock != null)
             RemoveBlockFromHolder();
 
-        // Remove block from corral
-        // ph: BlockCorral.instance.RemoveBlock(newBlock);
+        // Remove block from Pool
+        // ph: BlockPool.instance.RemoveBlock(newBlock);
 
         // Set transform of block
         newBlock.transform.position = transform.position;
@@ -28,15 +28,15 @@ public class BlockHolder : MonoBehaviour
             return;
 
         // Cache heldBlock (just in case)
-        Block blockToRemove = heldBlock;
+        BlockInstance blockToRemove = heldBlock;
 
         // Set transform of block
         blockToRemove.transform.position = Vector3.down * 10;
         blockToRemove.transform.parent = null;
         heldBlock = null;
 
-        // Add block to corral
-        // ph: BlockCorral.instance.AddBlock(blockToRemove);
+        // Add block to Pool
+        // ph: BlockPool.instance.AddBlock(blockToRemove);
     }
 
     public void SwapBlockFromOtherHolder(BlockHolder otherHolder)
@@ -53,8 +53,8 @@ public class BlockHolder : MonoBehaviour
         }
         
         // Cache other holder's held block and my held block (just in case)
-        Block myNewBlock = otherHolder.heldBlock;
-        Block myOldBlock = heldBlock;
+        BlockInstance myNewBlock = otherHolder.heldBlock;
+        BlockInstance myOldBlock = heldBlock;
 
         // Remove blocks from both holders
         RemoveBlockFromHolder();
@@ -63,5 +63,11 @@ public class BlockHolder : MonoBehaviour
         // Add blocks to holders
         otherHolder.AddBlockToHolder(myOldBlock);
         AddBlockToHolder(myNewBlock);
+    }
+
+    public void ReplaceBlock(BlockInstance newBlock)
+    {
+        RemoveBlockFromHolder();
+        AddBlockToHolder(newBlock);
     }
 }
