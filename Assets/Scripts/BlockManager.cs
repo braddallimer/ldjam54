@@ -8,14 +8,19 @@ using System.Linq;
 
 public class BlockManager : MonoBehaviour
 {
-    [SerializeField] SO_Level_BlockList blockListSO;
+    [Header("Prefabs")]
     [SerializeField] Object blockPrefab;
     [SerializeField] Object buttonPrefab;
-    public Dictionary<BlockInstance, bool> blocksInPool; // block instance, bool isInInPool?
-    [SerializeField] Transform content;
-    [SerializeField] PlayerControls playerCont;
+    [SerializeField] Object comfBarPrefab;
 
+    [Header("Other")]
+    [SerializeField] SO_Level_BlockList blockListSO;
+    public Dictionary<BlockInstance, bool> blocksInPool; // block instance, bool isInInPool?
+    [SerializeField] Transform buttonParent;
+    [SerializeField] Transform comfBarParent;
+    [SerializeField] PlayerControls playerCont;
     [SerializeField] AnimationCurve distanceMultiplierCurve;
+    [SerializeField] Vector2 comfBarOffset;
 
     void Start()
     {
@@ -27,7 +32,7 @@ public class BlockManager : MonoBehaviour
         }
     }
 
-    public void UpdateBlockDiscomfortScores()
+    public void UpdateBlockComfortScores()
     {
         foreach(BlockInstance block in blocksInPool.Keys)
         {
@@ -49,9 +54,6 @@ public class BlockManager : MonoBehaviour
             if (blockFromList != targetBlock)
             {
                 float distance = Vector2.Distance(targetBlock.transform.position, blockFromList.transform.position);
-
-                if (distance < 4)
-                    numInCloseProx++;
 
                 foreach (ComfortValue comfortVal in targetBlockInfo.relationships)
                 {
@@ -80,17 +82,21 @@ public class BlockManager : MonoBehaviour
                     }   
                 }
             }
-        }
 
+        }
+        /*
         if(scoreAverage != 0)
-            scoreAverage /= numInCloseProx;
+            scoreAverage /= numInCloseProx;*/
+
+        PlaceComfortBar(targetBlock, comfBarParent.GetChild(blocksInPool.Keys.
+                ToList().IndexOf(targetBlock)).GetComponent<RectTransform>());
 
         Debug.Log($"{targetBlock.blockInfo.blockName}'s preference score is {scoreAverage}, " +
             $"surrounded by {numInCloseProx} other block(s) in close proximity.");
         return scoreAverage;
     }
 
-    float DistanceMultiplier(float distance)
+    /*float DistanceMultiplier(float distance)
     {
         if (distance >= 5)
             return 0;
@@ -109,6 +115,21 @@ public class BlockManager : MonoBehaviour
 
         else
             return 1.5f;
+    }*/
+
+    void PlaceComfortBar(BlockInstance targetBlock, RectTransform comfortBar)
+    {
+        comfortBar.position = Camera.main.WorldToScreenPoint(targetBlock.transform.position + (Vector3)comfBarOffset);
+
+        Image cmfBarFill = comfortBar.Find("Fill").GetComponent<Image>();
+        if (cmfBarFill != null)
+            cmfBarFill.fillAmount = (targetBlock.comfortScore / 2) + .5f;
+
+        Debug.Log($"Setting {targetBlock.blockInfo.blockName}'s bar: {targetBlock.comfortScore} / 2 + .5 = {(targetBlock.comfortScore / 2) + .5f} at... {Time.time}");
+
+        TextMeshProUGUI cmfBarTMP = comfortBar.GetComponentInChildren<TextMeshProUGUI>();
+        if (cmfBarTMP != null)
+            cmfBarTMP.text = targetBlock.blockInfo.blockName;
     }
 
     void PopulatePool()
@@ -132,13 +153,19 @@ public class BlockManager : MonoBehaviour
 
             #region Instantiate Button
 
-            Button instantiatedButton = Instantiate(buttonPrefab, content).GetComponent<Button>();
+            Button instantiatedButton = Instantiate(buttonPrefab, buttonParent).GetComponent<Button>();
             BlockInstance correspondingBlock = blocksInPool.Keys.ElementAt(i);
             instantiatedButton.onClick.AddListener( delegate { playerCont.SetSelectedBlock(correspondingBlock); });
             instantiatedButton.onClick.AddListener( delegate { RemoveBlockFromPool(correspondingBlock); });
 
             instantiatedButton.GetComponentInChildren<TextMeshProUGUI>().text = instBlockInst.blockInfo.blockName;
             instantiatedButton.transform.Find("Image").GetComponent<Image>().color = instBlockInst.blockInfo.color;
+
+            #endregion
+
+            #region Instantiate Block Comfort Bars
+
+            Instantiate(comfBarPrefab, comfBarParent).GetComponent<Image>();
 
             #endregion
         }
@@ -150,8 +177,10 @@ public class BlockManager : MonoBehaviour
         {
             blocksInPool[block] = true;
             block.gameObject.SetActive(false);
-            content.GetChild(blocksInPool.Keys.ToList().IndexOf(block)).gameObject.SetActive(true);
+            buttonParent.GetChild(blocksInPool.Keys.ToList().IndexOf(block)).gameObject.SetActive(true);
             block.transform.position = Vector3.down * 100;
+
+            UpdateBlockComfortScores();
         }
     }
 
@@ -161,7 +190,7 @@ public class BlockManager : MonoBehaviour
         {
             blocksInPool[block] = false;
             block.gameObject.SetActive(true);
-            content.GetChild(blocksInPool.Keys.ToList().IndexOf(block)).gameObject.SetActive(false);
+            buttonParent.GetChild(blocksInPool.Keys.ToList().IndexOf(block)).gameObject.SetActive(false);
         }
             
     }

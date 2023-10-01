@@ -410,6 +410,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1372787642}
   - {fileID: 985980263}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -741,7 +742,7 @@ RectTransform:
   m_Children:
   - {fileID: 1582150206}
   m_Father: {fileID: 373516601}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
@@ -1033,6 +1034,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331038825}
   m_CullTransparentMesh: 1
+--- !u!1 &1372787641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1372787642}
+  m_Layer: 5
+  m_Name: Bars
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1372787642
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372787641}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 373516601}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1466134162
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,10 +1352,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef0672ba02808134798c2baad4cf39d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockListSO: {fileID: 11400000, guid: ef668c4b3d0b86c429e91d2b187d289d, type: 2}
   blockPrefab: {fileID: 5079326358533327175, guid: 7a6bdd20273e14c4f9396b52ca370e16, type: 3}
   buttonPrefab: {fileID: 4048757440091297680, guid: bd415e8e5e2944a43a2eba74a378dd70, type: 3}
-  content: {fileID: 1315262748}
+  comfBarPrefab: {fileID: 5831536677414999291, guid: baad5b3485c8e4a4faff374b57f8caea, type: 3}
+  blockListSO: {fileID: 11400000, guid: ef668c4b3d0b86c429e91d2b187d289d, type: 2}
+  buttonParent: {fileID: 1315262748}
+  comfBarParent: {fileID: 1372787642}
   playerCont: {fileID: 1622583454}
   distanceMultiplierCurve:
     serializedVersion: 2
@@ -1333,7 +1372,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.99277055
+      time: 1.045
       value: 1
       inSlope: 0
       outSlope: 0
@@ -1342,7 +1381,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
+      time: 1.05
       value: 0.5
       inSlope: 0
       outSlope: 0
@@ -1351,7 +1390,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 2
+      time: 2.05
       value: 0.5
       inSlope: 0
       outSlope: 0
@@ -1360,7 +1399,7 @@ MonoBehaviour:
       inWeight: 0.31020892
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 2.0035686
+      time: 2.053569
       value: 0.25
       inSlope: 0
       outSlope: 0
@@ -1369,7 +1408,7 @@ MonoBehaviour:
       inWeight: 1
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 3
+      time: 3.038274
       value: 0.25
       inSlope: 0
       outSlope: 0
@@ -1378,7 +1417,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 3.004694
+      time: 3.042968
       value: 0.1
       inSlope: 0
       outSlope: 0
@@ -1387,7 +1426,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 4
+      time: 4.0612106
       value: 0.1
       inSlope: 0
       outSlope: 0
@@ -1396,7 +1435,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 4.001144
+      time: 4.062355
       value: 0
       inSlope: 0
       outSlope: 0
@@ -1416,6 +1455,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  comfBarOffset: {x: 0, y: 1}
 --- !u!4 &1684684693 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4561448823000542855, guid: 387553a8eff045643923e8426046980f, type: 3}

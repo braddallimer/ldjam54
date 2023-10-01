@@ -26,7 +26,7 @@ public class BlockHolder : MonoBehaviour
         newBlock.transform.parent = transform;
         heldBlock = newBlock;
 
-        blockMang.UpdateBlockDiscomfortScores();
+        blockMang.UpdateBlockComfortScores();
     }
 
     public void RemoveBlockFromHolder()
@@ -46,7 +46,7 @@ public class BlockHolder : MonoBehaviour
         // Add block to Pool
         // ph: BlockPool.instance.AddBlock(blockToRemove);
 
-        blockMang.UpdateBlockDiscomfortScores();
+        //blockMang.UpdateBlockComfortScores();
     }
 
     public void SwapBlockFromOtherHolder(BlockHolder otherHolder)

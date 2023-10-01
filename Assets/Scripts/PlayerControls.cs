@@ -30,7 +30,7 @@ public class PlayerControls : MonoBehaviour
 
             if (hit.collider != null && hit.transform.CompareTag("Holder"))
             {
-                hit.transform.TryGetComponent<BlockHolder>(out BlockHolder targetHolder);
+                hit.transform.TryGetComponent(out BlockHolder targetHolder);
 
                 if (selectedBlock != null)
                 {
@@ -123,5 +123,6 @@ public class PlayerControls : MonoBehaviour
     public void SetSelectedBlock(BlockInstance newSelectedBlock)
     {
         selectedBlock = newSelectedBlock;
+        blockMang.UpdateBlockComfortScores();
     }
 }
