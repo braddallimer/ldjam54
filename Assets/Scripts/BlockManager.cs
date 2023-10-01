@@ -15,6 +15,8 @@ public class BlockManager : MonoBehaviour
     [SerializeField] Transform content;
     [SerializeField] PlayerControls playerCont;
 
+    [SerializeField] AnimationCurve distanceMultiplierCurve;
+
     void Start()
     {
         blocksInPool = new Dictionary<BlockInstance, bool>();
@@ -31,11 +33,11 @@ public class BlockManager : MonoBehaviour
         {
             // Only calculate discomfort score if the block is not in the pool (i.e. in play)
             if (!blocksInPool[block])
-                block.discomfortScore = CalculateDiscomfortScore(block);
+                block.comfortScore = CalculateComfortScore(block);
         }
     }
 
-    float CalculateDiscomfortScore(BlockInstance targetBlock)
+    float CalculateComfortScore(BlockInstance targetBlock)
     {
         float scoreAverage = 0;
         int numInCloseProx = 0;
@@ -51,52 +53,62 @@ public class BlockManager : MonoBehaviour
                 if (distance < 4)
                     numInCloseProx++;
 
-                foreach (DiscomfortValue discomfortVal in targetBlockInfo.relationships)
+                foreach (ComfortValue comfortVal in targetBlockInfo.relationships)
                 {
-                    #region Grab discomfortvalblock from list
-                    bool discomValBlockIsInPlay = false;
+                    #region Grab comfortvalblock from list
+                    bool comValBlockIsInPlay = false;
                     foreach(BlockInstance blockCheck in blocksInPool.Keys)
                     {
-                        if(blockCheck.blockInfo == discomfortVal.targetBlock)
+                        if(blockCheck.blockInfo == comfortVal.targetBlock)
                         {
-                            discomValBlockIsInPlay = !blocksInPool[blockCheck];
+                            comValBlockIsInPlay = !blocksInPool[blockCheck];
                         }
                     }
                     #endregion
 
-                    if (discomValBlockIsInPlay)
+                    if (comValBlockIsInPlay)
                     {
-                        if (discomfortVal.targetBlock == blockFromList.blockInfo)
+                        if (comfortVal.targetBlock == blockFromList.blockInfo)
                         {
-                            scoreAverage += discomfortVal.value * DistanceMultiplier(distance);
+                            scoreAverage += comfortVal.value * distanceMultiplierCurve.Evaluate(distance);
                         }
 
                         else
-                            scoreAverage += .5f * DistanceMultiplier(distance);
-                    }
-                        
+                            scoreAverage += .15f * distanceMultiplierCurve.Evaluate(distance);
+
+                        Debug.Log(distanceMultiplierCurve.Evaluate(distance));
+                    }   
                 }
             }
         }
 
-        scoreAverage /= numInCloseProx;
-        Debug.Log($"{targetBlock.blockInfo.blockName}'s preference score is {scoreAverage}");
+        if(scoreAverage != 0)
+            scoreAverage /= numInCloseProx;
+
+        Debug.Log($"{targetBlock.blockInfo.blockName}'s preference score is {scoreAverage}, " +
+            $"surrounded by {numInCloseProx} other block(s) in close proximity.");
         return scoreAverage;
     }
 
     float DistanceMultiplier(float distance)
     {
-        if (distance > 4)
+        if (distance >= 5)
             return 0;
 
-        else if (distance > 3)
+        if (distance >= 4)
             return .25f;
 
-        else if (distance > 2)
+        else if (distance >= 3)
             return .5f;
 
-        else
+        else if (distance >= 2)
+            return .75f;
+
+        else if (distance >= 1)
             return 1;
+
+        else
+            return 1.5f;
     }
 
     void PopulatePool()

@@ -77,7 +77,11 @@ public class BlockHolder : MonoBehaviour
 
     public void ReplaceBlock(BlockInstance newBlock)
     {
+        BlockInstance oldBlock = heldBlock;
+
         RemoveBlockFromHolder();
+        blockMang.ReturnBlockToPool(oldBlock);
+
         AddBlockToHolder(newBlock);
     }
 

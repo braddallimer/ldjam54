@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlockInstance : MonoBehaviour
 {
     public SO_Block blockInfo;
-    public float discomfortScore;
+    public float comfortScore;
 
     public void UpdateAppearance()
     {
